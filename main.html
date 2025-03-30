@@ -7,36 +7,44 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Duelo de Dados</h1>
-        <p>¡Lanza los dados y gana el duelo!</p>
-        
-        <div class="game-info">
-            <p>Ronda: <span id="round">1</span></p>
+
+    <h1>🎲 Duelo de Dados 🎲</h1>
+    <p>¡Lanza los dados y gana puntos! Cada jugador tiene 3 turnos.</p>
+
+    <button id="customNames">Personalizar Nombres</button>
+    <p id="bestScore">Mejor Puntuación: 0</p>
+
+    <div class="game-container">
+        <div class="player">
+            <h2>Jugador 1</h2>
+            <div id="dice1" class="dice" data-value="1"></div>
+            <p>Puntuación: <span id="score1">0</span></p>
+        </div>
+
+        <div class="panel">
+            <h2>Ronda <span id="round">1</span></h2>
             <p>Turno de: <span id="turn">Jugador 1</span></p>
-        </div>
-        
-        <div class="dice-container">
-            <div class="player">
-                <h2>Jugador 1</h2>
-                <img id="dice1" src="dice1.png" alt="Dado 1">
-                <p>Puntuación: <span id="score1">0</span></p>
-            </div>
-            <div class="player">
-                <h2>Jugador 2</h2>
-                <img id="dice2" src="dice1.png" alt="Dado 2">
-                <p>Puntuación: <span id="score2">0</span></p>
-            </div>
-        </div>
-        
-        <button id="rollDice">Lanzar Dado</button>
-        <button id="resetGame">Reiniciar</button>
-        
-        <div class="result">
+            <button id="rollDice">Lanzar Dado</button>
+            <button id="resetGame">Reiniciar</button>
             <p id="winnerMessage"></p>
         </div>
+
+        <div class="player">
+            <h2>Jugador 2</h2>
+            <div id="dice2" class="dice" data-value="1"></div>
+            <p>Puntuación: <span id="score2">0</span></p>
+        </div>
     </div>
-    
-    <script src="funcions.js"></script>
+
+    <h2>Historial de Lanzamientos</h2>
+    <table id="history">
+        <tr>
+            <th>Jugador</th>
+            <th>Lanzamiento</th>
+        </tr>
+    </table>
+
+    <script src="script.js"></script>
+
 </body>
 </html>

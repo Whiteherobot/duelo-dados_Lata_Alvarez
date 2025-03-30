@@ -1,64 +1,115 @@
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: white;
     text-align: center;
+    background-color: #1e1e1e;
+    color: white;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
-.game-info, .result {
-    margin-bottom: 20px;
-}
-
-.dice-container {
+.game-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-top: 20px;
 }
 
-img {
-    width: 80px;
-    transition: transform 0.3s;
-    animation: roll 1s ease-out;
+.player {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+    background: #282c34;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.panel {
+    text-align: center;
+    padding: 20px;
+    background: #444;
+    border-radius: 10px;
+    width: 250px;
 }
 
 button {
-    padding: 10px 20px;
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background: #ffcc00;
     border: none;
-    background: #ff5722;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    border-radius: 5px;
 }
 
 button:hover {
-    background: #e64a19;
+    background: #ff9900;
 }
 
-#rollDice:disabled {
-    background: grey;
-    cursor: not-allowed;
+/* 🎲 Dado */
+.dice {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
 }
 
-/* Animación del dado */
+/* Puntos del dado */
+.dot {
+    width: 15px;
+    height: 15px;
+    background: black;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* Posiciones de los puntos según el número del dado */
+.dice[data-value="1"] .dot:nth-child(5),
+.dice[data-value="2"] .dot:nth-child(1),
+.dice[data-value="2"] .dot:nth-child(9),
+.dice[data-value="3"] .dot:nth-child(1),
+.dice[data-value="3"] .dot:nth-child(5),
+.dice[data-value="3"] .dot:nth-child(9),
+.dice[data-value="4"] .dot:nth-child(1),
+.dice[data-value="4"] .dot:nth-child(3),
+.dice[data-value="4"] .dot:nth-child(7),
+.dice[data-value="4"] .dot:nth-child(9),
+.dice[data-value="5"] .dot:nth-child(1),
+.dice[data-value="5"] .dot:nth-child(3),
+.dice[data-value="5"] .dot:nth-child(5),
+.dice[data-value="5"] .dot:nth-child(7),
+.dice[data-value="5"] .dot:nth-child(9),
+.dice[data-value="6"] .dot:nth-child(1),
+.dice[data-value="6"] .dot:nth-child(3),
+.dice[data-value="6"] .dot:nth-child(4),
+.dice[data-value="6"] .dot:nth-child(6),
+.dice[data-value="6"] .dot:nth-child(7),
+.dice[data-value="6"] .dot:nth-child(9) {
+    opacity: 1;
+}
+
+/* Animación de lanzamiento */
 @keyframes roll {
-    0% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(720deg);
-    }
-    100% {
-        transform: rotate(1440deg);
-    }
+    0% { transform: rotateX(0deg) rotateY(0deg) translateY(0px); }
+    20% { transform: rotateX(360deg) rotateY(180deg) translateY(-10px); }
+    40% { transform: rotateX(720deg) rotateY(360deg) translateY(10px); }
+    60% { transform: rotateX(1080deg) rotateY(540deg) translateY(-5px); }
+    80% { transform: rotateX(1440deg) rotateY(720deg) translateY(5px); }
+    100% { transform: rotateX(1800deg) rotateY(900deg) translateY(0px); }
+}
+
+.rolling {
+    animation: roll 1s ease-out;
 }
