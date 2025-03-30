@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duelo de Dados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Duelo de Dados</h1>
+        <p>¡Lanza los dados y gana el duelo!</p>
+        
+        <div class="game-info">
+            <p>Ronda: <span id="round">1</span></p>
+            <p>Turno de: <span id="turn">Jugador 1</span></p>
+        </div>
+        
+        <div class="dice-container">
+            <div class="player">
+                <h2>Jugador 1</h2>
+                <img id="dice1" src="dice1.png" alt="Dado 1">
+                <p>Puntuación: <span id="score1">0</span></p>
+            </div>
+            <div class="player">
+                <h2>Jugador 2</h2>
+                <img id="dice2" src="dice1.png" alt="Dado 2">
+                <p>Puntuación: <span id="score2">0</span></p>
+            </div>
+        </div>
+        
+        <button id="rollDice">Lanzar Dado</button>
+        <button id="resetGame">Reiniciar</button>
+        
+        <div class="result">
+            <p id="winnerMessage"></p>
+        </div>
+    </div>
+    
+    <script src="funcions.js"></script>
+</body>
+</html>
