@@ -223,3 +223,70 @@ button:hover {
 .popup-content button:hover {
     background: linear-gradient(90deg, #ff9900, #ff6600);
 }
+
+/* Panel lateral oculto (completamente fuera de la vista) */
+#historialPanel {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Asegura que esté completamente fuera de la vista */
+    width: 300px;
+    height: 100%;
+    background-color: #282c34; /* Fondo oscuro consistente */
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    padding: 20px;
+    overflow-y: auto; /* Permite desplazarse si hay mucho contenido */
+    transition: right 0.3s ease; /* Animación de deslizamiento */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    color: white;
+}
+
+/* Título dentro del historial */
+#historialPanel h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #ffcc00;
+    text-align: center;
+}
+
+/* Botón flotante para abrir el panel */
+#openHistorial {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Posición inicial cuando el panel está oculto */
+    width: 50px;
+    height: 50px;
+    background-color: #ffcc00; /* Color distintivo */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100; /* Encima del panel */
+    font-size: 1.5rem;
+    color: black;
+    transition: right 0.3s ease; /* Transición suave */
+}
+
+/* Hover del botón */
+#openHistorial:hover {
+    background-color: #ff9900;
+}
+
+/* Ajustar la posición del botón cuando el panel está visible */
+#historialPanel.show ~ #openHistorial {
+    right: 320px; /* Mueve el botón junto con el panel (300px del panel + 20px de margen) */
+}
+
+/* Mostrar el panel lateral (completamente visible) */
+#historialPanel.show {
+    right: 0; /* Mueve el panel completamente a la vista */
+}
+
+/* Clase para deshabilitar y hacer opacos los elementos en el fondo */
+.disabled-overlay {
+    pointer-events: none; /* Deshabilita la interacción */
+    opacity: 0.5; /* Reduce la opacidad */
+    transition: opacity 0.3s ease; /* Transición suave */
+}

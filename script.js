@@ -5,10 +5,14 @@ let scores = [0, 0];
 let rolls = [0, 0];
 let bestScore = localStorage.getItem("bestScore") || 0;
 let playerNames = ["Jugador 1", "Jugador 2"];
-const diceSound = new Audio("dice-roll.mp3"); // Sonido de lanzamiento
 let turnoActivo = true; // Control para evitar múltiples interacciones
 let juegoTerminado = false; // Control para detener el juego
 let juegoActivo = false; // El juego está inactivo al principio
+const openHistorialButton = document.getElementById("openHistorial");
+const historialPanel = document.getElementById("historialPanel");
+const popup = document.getElementById("popup");
+const mainContent = document.querySelector("main"); 
+const diceSound = new Audio("dice-roll.mp3"); // Sonido de lanzamiento
 
 // Función para lanzar el dado
 function lanzarDado() {
@@ -145,6 +149,8 @@ function personalizarNombres() {
 window.onload = function () {
     const popup = document.getElementById("popup");
     popup.classList.add("show");
+    openHistorialButton.classList.add("disabled-overlay"); // Hacer opaco el botón
+    mainContent.classList.add("disabled-overlay"); // Hacer opaco el contenido principal
 };
 
 // Aplicar personalización y cerrar la ventana
@@ -168,8 +174,25 @@ document.getElementById("startGame").addEventListener("click", function () {
     // Ocultar la ventana emergente
     const popup = document.getElementById("popup");
     popup.classList.remove("show");
+    openHistorialButton.classList.remove("disabled-overlay"); // Restaurar el botón
+    mainContent.classList.remove("disabled-overlay"); // Restaurar el contenido principal
 });
 
+// Función para alternar la visibilidad del panel
+openHistorialButton.addEventListener("click", () => {
+    // Verificar si la ventana emergente está activa
+    if (popup.classList.contains("show")) {
+        return; // No hacer nada si la ventana emergente está activa
+    }
+
+    if (historialPanel.classList.contains("show")) {
+        historialPanel.classList.remove("show"); // Oculta el panel
+        openHistorialButton.style.right = "20px"; // Regresa el botón a su posición original
+    } else {
+        historialPanel.classList.add("show"); // Muestra el panel
+        openHistorialButton.style.right = "320px"; // Mueve el botón junto con el panel
+    }
+});
 
 
 // Eventos
