@@ -6,15 +6,18 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
 }
 
 .game-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    max-width: 1200px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 20px;
 }
 
 .player {
@@ -33,7 +36,8 @@ h1 {
     padding: 20px;
     background: #444;
     border-radius: 10px;
-    width: 250px;
+    width: 300px; /* Ajusta el ancho del panel */
+    margin: 20px 0; /* Espaciado vertical */
 }
 
 button {
