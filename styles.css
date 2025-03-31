@@ -31,6 +31,24 @@ h1 {
     width: 200px;
 }
 
+/* Estilo para el nombre del jugador */
+.player h2 {
+    color: white; /* Asegura que el texto sea blanco */
+    font-size: 1.5rem; /* Tamaño del texto */
+    font-weight: bold; /* Negrita para mayor visibilidad */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Sombra para mejorar el contraste */
+    margin-bottom: 10px; /* Espaciado inferior */
+}
+
+/* Estilo para el texto de la puntuación */
+.player p {
+    color: white; /* Asegura que el texto sea blanco */
+    font-size: 1rem; /* Tamaño del texto */
+    font-weight: bold; /* Negrita para mayor visibilidad */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Sombra para mejorar el contraste */
+    margin-top: 10px; /* Espaciado superior */
+}
+
 .panel {
     text-align: center;
     padding: 20px;
@@ -163,7 +181,22 @@ button:hover {
     color: #e0e0e0; /* Texto más claro */
 }
 
+.popup-content button {
+    margin: 10px;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #ffcc00, #ff9900); /* Gradiente atractivo */
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Transición en hover */
+}
 
+.popup-content button:hover {
+    background: linear-gradient(90deg, #ff9900, #ff6600);
+}
 
 /* Contenedor de cada grupo (label + input/select) */
 .popup-content div {
@@ -232,9 +265,9 @@ button:hover {
 #historialPanel {
     position: fixed;
     top: 0;
-    right: -100%; /* Asegura que esté completamente fuera de la vista */
+    right: -350px; /* Asegura que esté completamente fuera de la vista */
     width: 300px;
-    height: 100%;
+    height: 100%; /* Ocupa toda la altura de la ventana */
     background-color: #282c34; /* Fondo oscuro consistente */
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
     padding: 20px;
@@ -242,14 +275,55 @@ button:hover {
     transition: right 0.3s ease; /* Animación de deslizamiento */
     z-index: 1000; /* Asegura que esté encima de otros elementos */
     color: white;
+    border-radius: 10px 0 0 10px; /* Bordes redondeados en la esquina izquierda */
 }
 
-/* Título dentro del historial */
+#historialPanel.show {
+    right: 0; /* Mueve el panel completamente a la vista */
+}
+
 #historialPanel h2 {
     margin-top: 0;
     font-size: 1.5rem;
     color: #ffcc00;
     text-align: center;
+}
+
+#history {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#history th, #history td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: center;
+}
+
+#history th {
+    background-color: #444;
+    color: white;
+}
+
+#savedGames {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#savedGames li {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#savedGames li:hover {
+    background-color: #555;
 }
 
 /* Botón flotante para abrir el panel */
@@ -283,14 +357,164 @@ button:hover {
     right: 320px; /* Mueve el botón junto con el panel (300px del panel + 20px de margen) */
 }
 
-/* Mostrar el panel lateral (completamente visible) */
-#historialPanel.show {
-    right: 0; /* Mueve el panel completamente a la vista */
-}
-
 /* Clase para deshabilitar y hacer opacos los elementos en el fondo */
 .disabled-overlay {
     pointer-events: none; /* Deshabilita la interacción */
     opacity: 0.5; /* Reduce la opacidad */
     transition: opacity 0.3s ease; /* Transición suave */
+}
+
+/* Estilo para el historial */
+#historialPanel {
+    background-color: #282c34;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: fixed;
+    top: 20px;
+    right: -350px;
+    transition: right 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#historialPanel.show {
+    right: 20px;
+}
+
+#history {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#history th, #history td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: center;
+}
+
+#history th {
+    background-color: #444;
+}
+
+#clearHistory {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#clearHistory:hover {
+    background-color: #ff1a1a;
+}
+
+#savedGames {
+    list-style: none;
+    padding: 0;
+}
+
+#savedGames li {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#savedGames li:hover {
+    background-color: #555;
+}
+
+/* Botón para borrar el historial */
+#clearHistory {
+    position: absolute; /* Relativo al panel lateral */
+    bottom: 40px; /* Ajusta la distancia desde la parte inferior del panel */
+    right: 20px; /* Ajusta la distancia desde la parte derecha del panel */
+    width: 50px; /* Tamaño del botón */
+    height: 50px;
+    background-color: #ffcc00; /* Color distintivo */
+    border: none;
+    border-radius: 50%; /* Forma circular */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Tamaño del ícono */
+    color: black;
+    transition: all 0.3s ease; /* Transición suave para hover y posición */
+    z-index: 1100; /* Asegura que esté encima del panel */
+}
+
+#clearHistory:hover {
+    background-color: #ff9900; /* Color al pasar el cursor */
+    transform: scale(1.1); /* Efecto de agrandamiento */
+}
+
+/* Ajustar la posición del botón cuando el panel está visible */
+#historialPanel.show #clearHistory {
+    right: 20px; /* Mantiene el botón dentro del panel cuando está abierto */
+}
+
+/* Ajustar la posición del botón cuando el panel está visible */
+#historialPanel.show ~ #clearHistory {
+    right: 360px; /* Mueve el botón junto con el panel (300px del panel + 40px de margen) */
+}
+
+/* Ajustes para el panel del historial */
+#historialPanel {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Asegura que esté completamente fuera de la vista */
+    width: 300px;
+    height: 100%; /* Ocupa toda la altura de la ventana */
+    background-color: #282c34; /* Fondo oscuro consistente */
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    padding: 20px;
+    overflow-y: auto; /* Permite desplazarse si hay mucho contenido */
+    transition: right 0.3s ease; /* Animación de deslizamiento */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    color: white;
+    border-radius: 10px 0 0 10px; /* Bordes redondeados en la esquina izquierda */
+}
+
+#historialPanel.show {
+    right: 0; /* Mueve el panel completamente a la vista */
+}
+
+/* Botón flotante para abrir el panel */
+#openHistorial {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Posición inicial cuando el panel está oculto */
+    width: 50px;
+    height: 50px;
+    background-color: #ffcc00; /* Color distintivo */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100; /* Encima del panel */
+    font-size: 1.5rem;
+    color: black;
+    transition: right 0.3s ease; /* Transición suave */
+}
+
+/* Hover del botón */
+#openHistorial:hover {
+    background-color: #ff9900;
+}
+
+/* Ajustar la posición del botón cuando el panel está visible */
+#historialPanel.show ~ #openHistorial {
+    right: 320px; /* Mueve el botón junto con el panel (300px del panel + 20px de margen) */
 }

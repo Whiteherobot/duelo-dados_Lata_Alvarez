@@ -11,10 +11,8 @@
     <h1>🎲 Duelo de Dados 🎲</h1>
     <p>¡Lanza los dados y gana puntos! Cada jugador tiene 3 turnos.</p>
 
-    <button id="customNames">Personalizar Nombres</button>
     <p id="bestScore">Mejor Puntuación: 0</p>
-
-    <!-- Ventana emergente inicial -->
+    
     <!-- Ventana emergente inicial -->
     <div id="popup" class="popup">
         <div class="popup-content">
@@ -47,29 +45,30 @@
         </div>
     </div>
 
-    <div class="game-container">
-        <div class="player">
-            <h2>Jugador 1</h2>
-            <div id="dice1" class="dice" data-value="1"></div>
-            <p>Puntuación: <span id="score1">0</span></p>
-        </div>
+    <main>
+        <div class="game-container">
+            <div class="player">
+                <h2>Jugador 1</h2>
+                <div id="dice1" class="dice" data-value="1"></div>
+                <p>Puntuación: <span id="score1">0</span></p>
+            </div>
 
-        <div class="panel">
-            <h2>Ronda <span id="round">1</span></h2>
-            <p>Turno de: <span id="turn">Jugador 1</span></p>
-            <button id="rollDice">Lanzar Dado</button>
-            <button id="resetGame">Reiniciar</button>
-            <button id="resetBestScore">Reiniciar Mejor Puntuación</button>
-            
-            <p id="winnerMessage"></p>
-        </div>
+            <div class="panel">
+                <h2>Ronda <span id="round">1</span></h2>
+                <p>Turno de: <span id="turn">Jugador 1</span></p>
+                <button id="rollDice">Lanzar Dado</button>
+                <button id="resetGame">Reiniciar</button>
+                <button id="resetBestScore">Reiniciar Mejor Puntuación</button>
+                <p id="winnerMessage"></p>
+            </div>
 
-        <div class="player">
-            <h2>Jugador 2</h2>
-            <div id="dice2" class="dice" data-value="1"></div>
-            <p>Puntuación: <span id="score2">0</span></p>
+            <div class="player">
+                <h2>Jugador 2</h2>
+                <div id="dice2" class="dice" data-value="1"></div>
+                <p>Puntuación: <span id="score2">0</span></p>
+            </div>
         </div>
-    </div>
+    </main>
 
     <!-- Botón para abrir el panel -->
     <button id="openHistorial">📜</button>
@@ -83,6 +82,9 @@
                 <th>Lanzamiento</th>
             </tr>
         </table>
+        <button id="clearHistory">🗑️</button>
+        <h3>Partidas Guardadas</h3>
+        <ul id="savedGames"></ul>
     </div>
 
     <script src="script.js"></script>
