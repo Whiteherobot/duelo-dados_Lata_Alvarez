@@ -6,36 +6,55 @@ let rolls = [0, 0];
 let bestScore = localStorage.getItem("bestScore") || 0;
 let playerNames = ["Jugador 1", "Jugador 2"];
 const diceSound = new Audio("dice-roll.mp3"); // Sonido de lanzamiento
+let turnoActivo = true; // Control para evitar múltiples interacciones
+let juegoTerminado = false; // Control para detener el juego
+let juegoActivo = false; // El juego está inactivo al principio
 
 // Función para lanzar el dado
 function lanzarDado() {
-    if (round > 3) return; // Si ya jugaron 3 rondas, no hacer nada
+    if (juegoTerminado) return; // Si el juego terminó, no permitir más lanzamientos
+    if (!turnoActivo) return; // Bloquear interacción mientras el dado está rodando
 
-    let currentPlayer = turn % 2 === 1 ? 0 : 1;
-    let diceRoll = Math.floor(Math.random() * 6) + 1;
+    turnoActivo = false; // Deshabilitar interacción durante el lanzamiento
+
+    let currentPlayer = turn % 2 === 1 ? 0 : 1; // Determinar el jugador actual
+    let diceRoll = Math.floor(Math.random() * 6) + 1; // Generar número aleatorio del dado
     let diceElement = document.getElementById(`dice${currentPlayer + 1}`);
 
-    diceSound.play(); // Reproduce el sonido
-    diceElement.classList.add("rolling");
+    diceSound.play(); // Reproducir el sonido del dado
+    diceElement.classList.add("rolling"); // Agregar animación de lanzamiento
 
     setTimeout(() => {
         diceElement.classList.remove("rolling");
-        actualizarDados(diceElement, diceRoll);
-        actualizarHistorial(currentPlayer, diceRoll);
-    }, 1000);
+        actualizarDados(diceElement, diceRoll); // Actualizar visualización del dado
+        actualizarHistorial(currentPlayer, diceRoll); // Registrar el lanzamiento en el historial
 
-    scores[currentPlayer] += diceRoll;
-    rolls[currentPlayer]++;
-    document.getElementById(`score${currentPlayer + 1}`).innerText = scores[currentPlayer];
+        scores[currentPlayer] += diceRoll; // Sumar puntos al jugador actual
+        rolls[currentPlayer]++; // Incrementar el contador de lanzamientos del jugador actual
+        document.getElementById(`score${currentPlayer + 1}`).innerText = scores[currentPlayer];
 
-    if (rolls[currentPlayer] === 3) {
-        if (currentPlayer === 1) round++;
-        if (round > 3) return determinarGanador();
-    }
+        // Verificar si el jugador completó sus 3 lanzamientos
+        if (rolls[currentPlayer] === 3) {
+            rolls[currentPlayer] = 0; // Reiniciar lanzamientos para el siguiente ciclo
+            if (currentPlayer === 1) {
+                round++; // Incrementar la ronda después del turno del Jugador 2
+            }
+        }
 
-    turn++;
-    document.getElementById("turn").innerText = `${playerNames[turn % 2 === 1 ? 0 : 1]}`;
+        // Verificar si el juego debe terminar
+        if (round > 1) {
+            juegoTerminado = true; // Marcar el juego como terminado
+            determinarGanador(); // Mostrar el ganador
+            return; // Evitar más interacciones
+        }
+
+        turn++; // Cambiar al siguiente turno
+        document.getElementById("turn").innerText = `Turno de: ${playerNames[turn % 2 === 1 ? 0 : 1]}`;
+        turnoActivo = true; // Habilitar interacción para el próximo turno
+    }, 1000); // Esperar a que termine la animación
 }
+
+
 
 // Función para actualizar visualización de los dados
 function actualizarDados(diceElement, number) {
@@ -59,7 +78,8 @@ function actualizarHistorial(player, roll) {
 
 // Función para determinar el ganador
 function determinarGanador() {
-    document.getElementById("rollDice").disabled = true;
+    document.getElementById("rollDice").disabled = true; // Deshabilitar el botón
+    turnoActivo = false; // Bloquear interacción adicional
 
     let message =
         scores[0] > scores[1]
@@ -70,11 +90,22 @@ function determinarGanador() {
 
     document.getElementById("winnerMessage").innerText = message;
 
-    if (Math.max(scores[0], scores[1]) > bestScore) {
-        bestScore = Math.max(scores[0], scores[1]);
-        localStorage.setItem("bestScore", bestScore);
-        document.getElementById("bestScore").innerText = `Mejor Puntuación: ${bestScore}`;
+    // Actualizar el mejor puntaje en localStorage
+    let highestScore = Math.max(scores[0], scores[1]); // Calcular el puntaje más alto de los jugadores
+    if (highestScore > bestScore) {
+        bestScore = highestScore; // Actualizar la variable global
+        localStorage.setItem("bestScore", bestScore); // Guardar el nuevo mejor puntaje en localStorage
     }
+
+    // Mostrar el mejor puntaje en la interfaz
+    document.getElementById("bestScore").innerText = `Mejor Puntuación: ${bestScore}`;
+}
+
+// Función para reiniciar el mejor puntaje
+function reiniciarBestScore() {
+    bestScore = 0; // Reiniciar la variable global a 0
+    localStorage.setItem("bestScore", bestScore); // Actualizar el valor en localStorage
+    document.getElementById("bestScore").innerText = `Mejor Puntuación: ${bestScore}`; // Mostrar el cambio en la interfaz
 }
 
 // Función para reiniciar el juego
@@ -83,12 +114,21 @@ function reiniciarJuego() {
     rolls = [0, 0];
     turn = 1;
     round = 1;
+    turnoActivo = true; // Habilitar interacción
+    juegoTerminado = false; // Resetear el estado del juego
+
+    // Mostrar el mejor puntaje actual desde localStorage
+    bestScore = localStorage.getItem("bestScore") || 0; // Obtener el mejor puntaje almacenado
+    document.getElementById("bestScore").innerText = `Mejor Puntuación: ${bestScore}`;
+
     document.getElementById("score1").innerText = "0";
     document.getElementById("score2").innerText = "0";
     document.getElementById("winnerMessage").innerText = "";
     document.getElementById("rollDice").disabled = false;
     document.getElementById("history").innerHTML = "<tr><th>Jugador</th><th>Lanzamiento</th></tr>";
 }
+
+
 
 // Función para personalizar nombres
 function personalizarNombres() {
@@ -100,10 +140,46 @@ function personalizarNombres() {
     document.querySelectorAll(".player h2")[1].innerText = playerNames[1];
 }
 
+
+// Mostrar la ventana emergente al cargar la página
+window.onload = function () {
+    const popup = document.getElementById("popup");
+    popup.classList.add("show");
+};
+
+// Aplicar personalización y cerrar la ventana
+document.getElementById("startGame").addEventListener("click", function () {
+    // Obtener los valores ingresados por el usuario
+    const player1Name = document.getElementById("player1Name").value.trim();
+    const player2Name = document.getElementById("player2Name").value.trim();
+    const player1Color = document.getElementById("colorPlayer1").value;
+    const player2Color = document.getElementById("colorPlayer2").value;
+
+    // Aplicar nombres y colores personalizados
+    if (player1Name) {
+        document.querySelector(".player:nth-child(1) h2").innerText = player1Name;
+    }
+    if (player2Name) {
+        document.querySelector(".player:nth-child(3) h2").innerText = player2Name;
+    }
+    document.querySelector(".player:nth-child(1)").style.backgroundColor = player1Color;
+    document.querySelector(".player:nth-child(3)").style.backgroundColor = player2Color;
+
+    // Ocultar la ventana emergente
+    const popup = document.getElementById("popup");
+    popup.classList.remove("show");
+});
+
+
+
 // Eventos
 document.getElementById("rollDice").addEventListener("click", lanzarDado);
+document.getElementById("resetBestScore").addEventListener("click", reiniciarBestScore);
 document.getElementById("resetGame").addEventListener("click", reiniciarJuego);
 document.getElementById("customNames").addEventListener("click", personalizarNombres);
 document.addEventListener("keydown", (e) => {
-    if (e.code === "Space") lanzarDado();
+    const popup = document.getElementById("popup");
+    if (e.code === "Space" && turnoActivo && !juegoTerminado && !popup.classList.contains("show")) {
+        lanzarDado(); // Bloquear barra espaciadora si la ventana emergente está activa
+    }
 });

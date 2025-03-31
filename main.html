@@ -14,6 +14,39 @@
     <button id="customNames">Personalizar Nombres</button>
     <p id="bestScore">Mejor Puntuación: 0</p>
 
+    <!-- Ventana emergente inicial -->
+    <!-- Ventana emergente inicial -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2>¡Bienvenido a Duelo de Dados!</h2>
+            <p>Personaliza los detalles del juego antes de comenzar.</p>
+            
+            <label for="player1Name">Nombre del Jugador 1:</label>
+            <input id="player1Name" type="text" placeholder="Jugador 1">
+
+            <label for="colorPlayer1">Color del Jugador 1:</label>
+            <select id="colorPlayer1">
+                <option value="#ffcccb">Rojo Claro</option>
+                <option value="#add8e6">Azul Claro</option>
+                <option value="#90ee90">Verde Claro</option>
+                <option value="#ffffcc">Amarillo Claro</option>
+            </select>
+
+            <label for="player2Name">Nombre del Jugador 2:</label>
+            <input id="player2Name" type="text" placeholder="Jugador 2">
+
+            <label for="colorPlayer2">Color del Jugador 2:</label>
+            <select id="colorPlayer2">
+                <option value="#ffcccb">Rojo Claro</option>
+                <option value="#add8e6">Azul Claro</option>
+                <option value="#90ee90">Verde Claro</option>
+                <option value="#ffffcc">Amarillo Claro</option>
+            </select>
+
+            <button id="startGame">Empezar Juego</button>
+        </div>
+    </div>
+
     <div class="game-container">
         <div class="player">
             <h2>Jugador 1</h2>
@@ -26,6 +59,8 @@
             <p>Turno de: <span id="turn">Jugador 1</span></p>
             <button id="rollDice">Lanzar Dado</button>
             <button id="resetGame">Reiniciar</button>
+            <button id="resetBestScore">Reiniciar Mejor Puntuación</button>
+            
             <p id="winnerMessage"></p>
         </div>
 

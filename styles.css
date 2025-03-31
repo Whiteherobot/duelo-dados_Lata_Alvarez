@@ -113,3 +113,113 @@ button:hover {
 .rolling {
     animation: roll 1s ease-out;
 }
+
+/* Estilos mejorados para la ventana emergente */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 0.9); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+}
+
+.popup.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup-content {
+    background-color: #282c34; /* Fondo consistente con el diseño general */
+    padding: 35px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Sombra */
+}
+
+.popup-content h2 {
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    color: #ffcc00;
+}
+
+.popup-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #e0e0e0; /* Texto más claro */
+}
+
+
+
+/* Contenedor de cada grupo (label + input/select) */
+.popup-content div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alineación izquierda */
+    gap: 5px; /* Espaciado uniforme entre label y campo */
+    margin-bottom: 15px; /* Espacio entre grupos */
+}
+
+/* Estilizar labels */
+.popup-content label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffcc00; /* Color de las etiquetas */
+    margin-bottom: 10px; /* Más espacio debajo del label */
+    margin-left: 15px; /* Ajusta esta línea para mover el label hacia la izquierda */
+    text-align: left; /* Alineación del texto */
+    display: block; /* Asegura que se comporten como un bloque autónomo */
+}
+
+/* Estilizar inputs y selects para que tengan el mismo tamaño */
+.popup-content input,
+.popup-content select {
+    width: 100%; /* Mantener anchura total */
+    padding: 12px; /* Espaciado interno */
+    margin: 5px 0 15px; /* Espaciado: 5px arriba, 0 a los lados, 15px abajo */
+    border: 1px solid #555; /* Bordes más suaves */
+    background-color: #1e1e1e; /* Fondo oscuro consistente */
+    color: white; /* Texto en blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de texto uniforme */
+    box-sizing: border-box; /* Asegura que padding y border no afecten tamaño */
+    transition: all 0.3s ease; /* Animación suave al interactuar */
+}
+
+/* Enfocar input o select */
+.popup-content input:focus,
+.popup-content select:focus {
+    outline: none;
+    border: 1px solid #ffcc00; /* Cambiar color del borde al enfocar */
+    background-color: #282c34; /* Fondo un poco más claro */
+    box-shadow: 0 0 10px #ffcc00; /* Efecto brillante */
+}
+
+/* Mejora del botón */
+.popup-content button {
+    margin-top: 20px; /* Más separación del resto de elementos */
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #ffcc00, #ff9900); /* Gradiente atractivo */
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Transición en hover */
+}
+
+/* Efecto hover en el botón */
+.popup-content button:hover {
+    background: linear-gradient(90deg, #ff9900, #ff6600);
+}
