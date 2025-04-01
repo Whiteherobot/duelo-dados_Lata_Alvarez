@@ -59,7 +59,8 @@ function lanzarDado() {
         }
 
         turn++;
-        document.getElementById("turn").innerText = `Jugador ${turn % 2 === 1 ? 1 : 2}`;
+        // Actualizar el texto del turno con los nombres personalizados
+        document.getElementById("turn").innerText = `Turno de: ${turn % 2 === 1 ? playerNames[0] : playerNames[1]}`;
         turnoActivo = true;
     }, 500);
 }
@@ -362,7 +363,7 @@ function resetGameState() {
 
     // Restablecer los textos de la ronda y el turno
     document.getElementById("round").innerText = round;
-    document.getElementById("turn").innerText = `Jugador 1`;
+    document.getElementById("turn").innerText = `Turno de: ${playerNames[0]}`;
 
     document.getElementById("score1").innerText = "0";
     document.getElementById("score2").innerText = "0";

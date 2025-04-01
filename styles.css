@@ -433,33 +433,26 @@ button:hover {
 
 /* Botón para borrar el historial */
 #clearHistory {
-    position: absolute; /* Relativo al panel lateral */
-    bottom: 40px; /* Ajusta la distancia desde la parte inferior del panel */
-    right: 20px; /* Ajusta la distancia desde la parte derecha del panel */
-    width: 50px; /* Tamaño del botón */
-    height: 50px;
-    background-color: #ffcc00; /* Color distintivo */
+    position: relative; /* Cambia de fixed a relative para que siga el flujo del contenido */
+    background-color: #ffcc00; /* Color amarillo */
+    color: black;
     border: none;
+    padding: 10px;
     border-radius: 50%; /* Forma circular */
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px auto; /* Centra el botón horizontalmente */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem; /* Tamaño del ícono */
-    color: black;
-    transition: all 0.3s ease; /* Transición suave para hover y posición */
-    z-index: 1100; /* Asegura que esté encima del panel */
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 #clearHistory:hover {
-    background-color: #ff9900; /* Color al pasar el cursor */
-    transform: scale(1.1); /* Efecto de agrandamiento */
-}
-
-/* Ajustar la posición del botón cuando el panel está visible */
-#historialPanel.show #clearHistory {
-    right: 20px; /* Mantiene el botón dentro del panel cuando está abierto */
+    transform: scale(1.1); /* Efecto de agrandamiento al pasar el cursor */
+    background-color: #ff9900; /* Cambia el color al pasar el cursor */
 }
 
 /* Ajustar la posición del botón cuando el panel está visible */
