@@ -4,82 +4,92 @@ let round = 1;
 let scores = [0, 0];
 let rolls = [0, 0];
 let bestScore = localStorage.getItem("bestScore") || 0;
+let bestScorePlayer = localStorage.getItem("bestScorePlayer") || ""; // Jugador con el mejor puntaje
 let playerNames = ["Jugador 1", "Jugador 2"];
-let turnoActivo = true; // Control para evitar múltiples interacciones
-let juegoTerminado = false; // Control para detener el juego
-let juegoActivo = false; // El juego está inactivo al principio
+let turnoActivo = true;
+let juegoTerminado = false;
+let savedGames = JSON.parse(localStorage.getItem("savedGames")) || [];
 const openHistorialButton = document.getElementById("openHistorial");
 const historialPanel = document.getElementById("historialPanel");
 const popup = document.getElementById("popup");
 const mainContent = document.querySelector("main"); 
 const diceSound = new Audio("dice-roll.mp3"); // Sonido de lanzamiento
 
-// Variables globales para guardar partidas
-let savedGames = [];
+// Variable para controlar si se está visualizando una partida guardada
+let viendoPartidaGuardada = false;
 
 // Función para lanzar el dado
 function lanzarDado() {
-    if (juegoTerminado) return; // Si el juego terminó, no permitir más lanzamientos
-    if (!turnoActivo) return; // Bloquear interacción mientras el dado está rodando
+    if (viendoPartidaGuardada) {
+        cerrarVistaPartidaGuardada(); // Cerrar automáticamente la vista de la partida guardada
+    }
 
-    turnoActivo = false; // Deshabilitar interacción durante el lanzamiento
+    if (juegoTerminado || !turnoActivo) return;
 
-    let currentPlayer = turn % 2 === 1 ? 0 : 1; // Determinar el jugador actual
-    let diceRoll = Math.floor(Math.random() * 6) + 1; // Generar número aleatorio del dado
+    turnoActivo = false;
+    let currentPlayer = turn % 2 === 1 ? 0 : 1;
+    let diceRoll = Math.floor(Math.random() * 6) + 1;
     let diceElement = document.getElementById(`dice${currentPlayer + 1}`);
 
     diceSound.play(); // Reproducir el sonido del dado
-    diceElement.classList.add("rolling"); // Agregar animación de lanzamiento
-
+    diceElement.classList.add("rolling");
     setTimeout(() => {
         diceElement.classList.remove("rolling");
-        actualizarDados(diceElement, diceRoll); // Actualizar visualización del dado
-        actualizarHistorial(currentPlayer, diceRoll); // Registrar el lanzamiento en el historial
+        actualizarDados(diceElement, diceRoll);
+        actualizarHistorial(currentPlayer, diceRoll);
 
-        scores[currentPlayer] += diceRoll; // Sumar puntos al jugador actual
-        rolls[currentPlayer]++; // Incrementar el contador de lanzamientos del jugador actual
+        scores[currentPlayer] += diceRoll;
+        rolls[currentPlayer]++;
         document.getElementById(`score${currentPlayer + 1}`).innerText = scores[currentPlayer];
 
-        // Verificar si el jugador completó sus 3 lanzamientos
         if (rolls[currentPlayer] === 3) {
-            rolls[currentPlayer] = 0; // Reiniciar lanzamientos para el siguiente ciclo
+            rolls[currentPlayer] = 0;
             if (currentPlayer === 1) {
-                round++; // Incrementar la ronda después del turno del Jugador 2
-                document.getElementById("round").innerText = round; // Actualizar la visualización de la ronda
+                round++;
+                document.getElementById("round").innerText = round;
             }
         }
 
-        // Verificar si el juego debe terminar después de 18 turnos
         if (turn >= 18) {
-            juegoTerminado = true; // Marcar el juego como terminado
-            determinarGanador(); // Mostrar el ganador
-            agregarGanadorAlHistorial(); // Agregar el ganador al historial
-            return; // Evitar más interacciones
+            juegoTerminado = true;
+            determinarGanador();
+            agregarGanadorAlHistorial();
+            guardarPartida();
+            return;
         }
 
-        turn++; // Cambiar al siguiente turno
+        turn++;
         document.getElementById("turn").innerText = `Jugador ${turn % 2 === 1 ? 1 : 2}`;
-        turnoActivo = true; // Habilitar interacción para el próximo turno
-    }, 500); // Reducir el delay a 0.5 segundos
+        turnoActivo = true;
+    }, 500);
 }
 
 // Función para actualizar visualización de los dados
 function actualizarDados(diceElement, number) {
-    diceElement.setAttribute("data-value", number); // Actualiza el valor del dado
-    diceElement.innerHTML = ""; // Limpiar puntos anteriores
-
-    // Crear los puntos dinámicos (siempre 9 para que coincida con el CSS)
+    diceElement.setAttribute("data-value", number);
+    diceElement.innerHTML = "";
     for (let i = 1; i <= 9; i++) {
         let dot = document.createElement("div");
-        dot.classList.add("dot"); // Clase general de puntos
+        dot.classList.add("dot");
         diceElement.appendChild(dot);
     }
 }
 
-// Función para actualizar el historial con un diseño mejorado
+// Función para limpiar la tabla del historial
+function limpiarHistorial() {
+    const table = document.getElementById("history");
+    table.innerHTML = `
+        <tr>
+            <th>Jugador</th>
+            <th>Lanzamiento</th>
+        </tr>
+    `;
+}
+
+// Función para actualizar el historial
 function actualizarHistorial(player, roll) {
-    let table = document.getElementById("history");
-    let row = table.insertRow();
+    const table = document.getElementById("history");
+    const row = table.insertRow();
     row.innerHTML = `
         <td><strong>${playerNames[player]}</strong></td>
         <td>${roll}</td>
@@ -101,6 +111,9 @@ function borrarHistorial() {
 
     // Limpiar el historial de localStorage
     localStorage.removeItem("historial");
+    localStorage.removeItem("savedGames");
+    savedGames = [];
+    actualizarListaPartidas();
 }
 
 // Función para guardar la partida
@@ -110,11 +123,14 @@ function guardarPartida() {
         movimientos: Array.from(document.querySelectorAll("#history tr"))
             .slice(1) // Ignorar la fila de encabezado
             .map(row => ({
-                jugador: row.cells[0].innerText,
-                lanzamiento: row.cells[1].innerText
-            }))
+                jugador: row.cells[0]?.innerText || "",
+                lanzamiento: row.cells[1]?.innerText || ""
+            })),
+        ganador: document.querySelector("#history tr:last-child td").innerText
     };
+
     savedGames.push(partida);
+    localStorage.setItem("savedGames", JSON.stringify(savedGames));
     actualizarListaPartidas();
 }
 
@@ -124,7 +140,15 @@ function actualizarListaPartidas() {
     savedGamesList.innerHTML = ""; // Limpiar la lista
     savedGames.forEach((partida, index) => {
         const li = document.createElement("li");
-        li.innerText = `Partida de ${partida.jugadores[0]} y ${partida.jugadores[1]}`;
+
+        // Agregar el ícono de trofeo si el jugador tiene el mejor puntaje
+        const ganadorConTrofeo = partida.ganador.includes(bestScorePlayer)
+            ? `${partida.ganador} 🏆`
+            : partida.ganador;
+
+        li.innerText = ganadorConTrofeo;
+
+        // Agregar evento para mostrar los movimientos de la partida
         li.addEventListener("click", () => mostrarMovimientosPartida(index));
         savedGamesList.appendChild(li);
     });
@@ -132,14 +156,16 @@ function actualizarListaPartidas() {
 
 // Función para mostrar los movimientos de una partida guardada
 function mostrarMovimientosPartida(index) {
+    if (!juegoTerminado) {
+        alert("No puedes visualizar partidas guardadas mientras estás en una partida activa.");
+        return;
+    }
+
     const partida = savedGames[index];
+    limpiarHistorial(); // Limpiar la tabla antes de mostrar los movimientos
     const table = document.getElementById("history");
-    table.innerHTML = `
-        <tr>
-            <th>Jugador</th>
-            <th>Lanzamiento</th>
-        </tr>
-    `;
+
+    // Mostrar los movimientos de la partida seleccionada
     partida.movimientos.forEach(movimiento => {
         const row = table.insertRow();
         row.innerHTML = `
@@ -147,6 +173,31 @@ function mostrarMovimientosPartida(index) {
             <td>${movimiento.lanzamiento}</td>
         `;
     });
+
+    // Mostrar el ganador de la partida
+    const row = table.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 2;
+    cell.innerText = partida.ganador;
+    cell.style.textAlign = "center";
+    cell.style.fontWeight = "bold";
+    cell.style.backgroundColor = "#444";
+    cell.style.color = "#ffcc00";
+
+    // Bloquear interacciones del juego actual
+    viendoPartidaGuardada = true;
+    document.getElementById("rollDice").disabled = true; // Deshabilitar el botón de lanzar dados
+    document.getElementById("winnerMessage").innerText = "Visualizando partida guardada";
+}
+
+// Función para cerrar la vista de una partida guardada
+function cerrarVistaPartidaGuardada() {
+    if (viendoPartidaGuardada) {
+        limpiarHistorial(); // Limpiar el historial
+        resetGameState(); // Restaurar el estado del juego actual
+        document.getElementById("winnerMessage").innerText = ""; // Limpiar el mensaje de ganador
+        viendoPartidaGuardada = false;
+    }
 }
 
 // Función para determinar el ganador
@@ -154,24 +205,44 @@ function determinarGanador() {
     document.getElementById("rollDice").disabled = true; // Deshabilitar el botón
     turnoActivo = false; // Bloquear interacción adicional
 
-    let message =
-        scores[0] > scores[1]
-            ? `${playerNames[0]} gana 🎉`
-            : scores[0] < scores[1]
-            ? `${playerNames[1]} gana 🎉`
-            : "¡Empate! 🤝";
+    let message;
+    if (scores[0] > scores[1]) {
+        message = `${playerNames[0]} gana 🎉`;
+        actualizarMejorScore(playerNames[0], scores[0]);
+    } else if (scores[0] < scores[1]) {
+        message = `${playerNames[1]} gana 🎉`;
+        actualizarMejorScore(playerNames[1], scores[1]);
+    } else {
+        message = "¡Empate! 🤝";
+    }
 
     document.getElementById("winnerMessage").innerText = message;
 
-    // Actualizar el mejor puntaje en localStorage
-    let highestScore = Math.max(scores[0], scores[1]); // Calcular el puntaje más alto de los jugadores
-    if (highestScore > bestScore) {
-        bestScore = highestScore; // Actualizar la variable global
-        localStorage.setItem("bestScore", bestScore); // Guardar el nuevo mejor puntaje en localStorage
-    }
+    // Actualizar la interfaz con la copa
+    actualizarCopa();
+}
 
-    // Mostrar el mejor puntaje en la interfaz
-    document.getElementById("bestScore").innerText = `Mejor Puntuación: ${bestScore}`;
+// Función para actualizar el mejor puntaje
+function actualizarMejorScore(player, score) {
+    if (score > bestScore) {
+        bestScore = score;
+        bestScorePlayer = player;
+        localStorage.setItem("bestScore", bestScore);
+        localStorage.setItem("bestScorePlayer", bestScorePlayer);
+    }
+}
+
+// Función para actualizar la copa en la interfaz
+function actualizarCopa() {
+    document.querySelectorAll(".player h2").forEach((h2, index) => {
+        // Eliminar cualquier copa existente
+        h2.innerText = playerNames[index];
+
+        // Agregar la copa solo si el jugador tiene el mejor puntaje
+        if (playerNames[index] === bestScorePlayer) {
+            h2.innerText += " 🏆";
+        }
+    });
 }
 
 // Función para determinar el ganador y agregarlo al historial
@@ -179,9 +250,9 @@ function agregarGanadorAlHistorial() {
     // Determinar quién ganó
     let ganador;
     if (scores[0] > scores[1]) {
-        ganador = `${playerNames[0]} ganó 🎉`;
+        ganador = `${playerNames[0]} ganó 🎉 🏆`;
     } else if (scores[0] < scores[1]) {
-        ganador = `${playerNames[1]} ganó 🎉`;
+        ganador = `${playerNames[1]} ganó 🎉 🏆`;
     } else {
         ganador = "¡Empate! 🤝";
     }
@@ -269,6 +340,9 @@ function reiniciarJuego() {
 
             // Ocultar la ventana emergente
             popup.classList.remove("show");
+
+            // Actualizar la interfaz con la copa
+            actualizarCopa();
         });
     });
 }
@@ -294,7 +368,12 @@ function resetGameState() {
     document.getElementById("score2").innerText = "0";
     document.getElementById("winnerMessage").innerText = "";
     document.getElementById("rollDice").disabled = false;
-    document.getElementById("history").innerHTML = "<tr><th>Jugador</th><th>Lanzamiento</th></tr>";
+
+    // Limpiar la tabla del historial
+    limpiarHistorial();
+
+    // Actualizar la interfaz con la copa
+    actualizarCopa();
 }
 
 // Función para personalizar nombres
@@ -347,7 +426,10 @@ window.onload = function () {
     popup.classList.add("show");
     openHistorialButton.classList.add("disabled-overlay"); // Hacer opaco el botón
     mainContent.classList.add("disabled-overlay"); // Hacer opaco el contenido principal
+    limpiarHistorial(); // Limpiar la tabla del historial al cargar la página
     cargarHistorialDesdeLocalStorage();
+    actualizarListaPartidas();
+    actualizarCopa(); // Asegurarse de que la copa se muestre correctamente
 };
 
 // Aplicar personalización y cerrar la ventana
@@ -391,6 +473,10 @@ openHistorialButton.addEventListener("click", () => {
         return; // No hacer nada si la ventana emergente está activa
     }
 
+    if (viendoPartidaGuardada) {
+        cerrarVistaPartidaGuardada(); // Cerrar la vista de la partida guardada si está activa
+    }
+
     if (historialPanel.classList.contains("show")) {
         historialPanel.classList.remove("show"); // Oculta el panel
         openHistorialButton.style.right = "20px"; // Regresa el botón a su posición original
@@ -405,11 +491,13 @@ document.getElementById("rollDice").addEventListener("click", lanzarDado);
 document.getElementById("resetBestScore").addEventListener("click", reiniciarBestScore);
 document.getElementById("resetGame").addEventListener("click", reiniciarJuego);
 document.getElementById("clearHistory").addEventListener("click", borrarHistorial);
-document.getElementById("resetGame").addEventListener("click", guardarPartida);
 
 document.addEventListener("keydown", (e) => {
     const popup = document.getElementById("popup");
     if (e.code === "Space" && turnoActivo && !juegoTerminado && !popup.classList.contains("show")) {
-        lanzarDado(); // Bloquear barra espaciadora si la ventana emergente está activa
+        if (viendoPartidaGuardada) {
+            cerrarVistaPartidaGuardada(); // Cerrar automáticamente la vista de la partida guardada
+        }
+        lanzarDado(); // Lanzar el dado
     }
 });
