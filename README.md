@@ -62,7 +62,7 @@ Al finalizar las tres rondas, se muestra un mensaje indicando el ganador o si hu
 Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 - **HTML5**: Para la estructura semántica de la interfaz.
 - **CSS3**: Para los estilos, diseño responsivo y animaciones.
-- **JavaScript (ES6)**: Para la lógica del juego, manipulación del DOM y control de eventos.
+- **JavaScript (Int)**: Para la lógica del juego, manipulación del DOM y control de eventos.
 
 ---
 
