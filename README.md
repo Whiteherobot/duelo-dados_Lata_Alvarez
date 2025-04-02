@@ -74,10 +74,55 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
    ```javascript
    function lanzarDado() {
-       const dado = Math.floor(Math.random() * 6) + 1; // Generar número aleatorio entre 1 y 6
-       actualizarPuntuacion(dado);
-       cambiarTurno();
-   }
+    if (viendoPartidaGuardada) {
+        cerrarVistaPartidaGuardada(); 
+    }
+
+    if (juegoTerminado || !turnoActivo) return;
+
+    turnoActivo = false; // Bloquear interacción hasta que termine el turno
+
+    diceSound.play();
+
+    let currentPlayer = turn % 2 === 1 ? 0 : 1;
+    let diceRoll = Math.floor(Math.random() * 6) + 1;
+    let diceElement = document.getElementById(`dice${currentPlayer + 1}`);
+
+    diceElement.classList.add("rolling");
+    setTimeout(() => {
+        diceElement.classList.remove("rolling");
+        actualizarDados(diceElement, diceRoll);
+        actualizarHistorial(currentPlayer, diceRoll);
+
+        scores[currentPlayer] += diceRoll;
+        rolls[currentPlayer]++;
+        document.getElementById(`score${currentPlayer + 1}`).innerText = scores[currentPlayer];
+
+        if (rolls[currentPlayer] === 1) {
+            rolls[currentPlayer] = 0;
+            if (currentPlayer === 1) {
+                round++;
+                document.getElementById("round").innerText = round;
+            }
+        }
+
+        if (turn >= 6) {
+            juegoTerminado = true;
+            determinarGanador();
+            agregarGanadorAlHistorial();
+            guardarPartida();
+            return;
+        }
+
+        turn++;
+        document.getElementById("turn").innerText = `Turno de: ${turn % 2 === 1 ? playerNames[0] : playerNames[1]}`;
+
+        // Habilitar interacción después de 1 segundo
+        setTimeout(() => {
+            turnoActivo = true;
+        }, 1000);
+    }, 500); 
+    }
    ```
 
 ### 2. **Historial de Lanzamientos**
