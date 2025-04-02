@@ -40,6 +40,7 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Sombra ligera */
 }
 button:hover {
     background: #ff9900;
@@ -237,6 +238,7 @@ button:hover {
     font-size: 1.5rem;
     color: #ffcc00;
     text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra negra suave */
 }
 #history {
     width: 100%;
@@ -247,10 +249,10 @@ button:hover {
     border: 1px solid #444;
     padding: 8px;
     text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra negra suave */
 }
 #history th {
     background-color: #444;
-    color: white;
 }
 #savedGames {
     list-style: none;
@@ -284,20 +286,20 @@ button:hover {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: right 0.3s ease, bottom 0.3s ease; /* Transición suave */
+    transition: right 0.3s ease, bottom 0.3s ease; 
 }
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
 }
 #historialPanel.show ~ #openHistorial {
-    right: calc(300px + 15px); /* Mueve el botón junto con el historial (300px del ancho del historial + 15px de margen) */
+    right: calc(300px + 15px); 
 }
 /* Clase para deshabilitar y hacer opacos los elementos en el fondo */
 .disabled-overlay {
-    pointer-events: none; /* Deshabilita la interacción */
-    opacity: 0.5; /* Reduce la opacidad */
-    transition: opacity 0.3s ease; /* Transición suave */
+    pointer-events: none; 
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
 }
 /* Estilo para el historial */
 #historialPanel {
@@ -596,7 +598,7 @@ button:hover {
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(80% + 15px); /* Mueve el botón junto con el historial (80% del ancho del historial + 15px de margen) */
+        right: calc(80% + 15px); 
     }
 }
 /* Estilos para pantallas muy pequeñas (530px o menos) */
@@ -642,7 +644,7 @@ button:hover {
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(90% + 15px); /* Mueve el botón junto con el historial (90% del ancho del historial + 15px de margen) */
+        right: calc(90% + 15px); 
     }
 }
 /* Ajustar el botón de abrir historial */
@@ -788,4 +790,19 @@ button:hover {
         height: 45px;
         transition: all 0.2s ease-in-out; 
     }
+}
+
+/* Sombreado general para textos */
+h1, h2, h3, p, span, label {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra negra suave */
+}
+
+/* Sombreado más fuerte para encabezados */
+h1, h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra más pronunciada */
+}
+
+/* Sombreado para textos dentro del historial */
+#historialPanel h2, #history th, #history td {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra negra suave */
 }
