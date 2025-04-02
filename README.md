@@ -48,7 +48,7 @@ El tablero principal muestra las secciones de cada jugador, el panel central con
 El historial dinámico registra los lanzamientos de cada jugador y muestra los resultados en una tabla.
 
 <div align="center">
-    <img src="image3.png" alt="Historial de Lanzamientos" width="50%">
+    <img src="image3.png" alt="Historial de Lanzamientos" width="40%">
 </div>
 
 ---
@@ -57,7 +57,7 @@ El historial dinámico registra los lanzamientos de cada jugador y muestra los r
 Al finalizar las tres rondas, se muestra un mensaje indicando el ganador o si hubo un empate.
 
 <div align="center">
-    <img src="image4.png" alt="Pantalla de Resultado" width="50%">
+    <img src="image4.png" alt="Pantalla de Resultado" width="40%">
 </div>
 
 ---
