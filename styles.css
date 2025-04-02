@@ -7,12 +7,10 @@ body {
     color: white;
     text-align: center;
 }
-
 h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
 }
-
 .game-container {
     display: flex;
     justify-content: space-around;
@@ -20,7 +18,6 @@ h1 {
     margin: 20px auto;
     max-width: 1200px;
 }
-
 .player {
     width: 30%;
     padding: 10px;
@@ -28,7 +25,6 @@ h1 {
     background-color: #444;
     text-align: center;
 }
-
 .panel {
     width: 30%;
     padding: 10px;
@@ -36,7 +32,6 @@ h1 {
     background-color: #333;
     text-align: center;
 }
-
 button {
     margin-top: 10px;
     padding: 10px 15px;
@@ -46,11 +41,9 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
-
 button:hover {
     background: #ff9900;
 }
-
 /* 🎲 Dado */
 .dice {
     width: 80px;
@@ -66,7 +59,6 @@ button:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto;
 }
-
 /* Puntos del dado */
 .dot {
     width: 15px;
@@ -75,8 +67,6 @@ button:hover {
     border-radius: 50%;
     opacity: 0;
 }
-
-/* Posiciones de los puntos según el número del dado */
 .dice[data-value="1"] .dot:nth-child(5),
 .dice[data-value="2"] .dot:nth-child(1),
 .dice[data-value="2"] .dot:nth-child(9),
@@ -110,19 +100,17 @@ button:hover {
     80% { transform: rotateX(1440deg) rotateY(720deg) translateY(5px); }
     100% { transform: rotateX(1800deg) rotateY(900deg) translateY(0px); }
 }
-
 .rolling {
     animation: roll 1s ease-out;
 }
-
-/* Estilos mejorados para la ventana emergente */
+/* Estilospara la ventana emergente */
 .popup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(30, 30, 30, 0.9); /* Fondo oscuro semitransparente */
+    background-color: rgba(30, 30, 30, 0.9); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,12 +119,10 @@ button:hover {
     opacity: 0;
     transition: visibility 0s, opacity 0.3s;
 }
-
 .popup.show {
     visibility: visible;
     opacity: 1;
 }
-
 .popup-content {
     background-color: #282c34; /* Fondo consistente con el diseño general */
     padding: 35px;
@@ -147,150 +133,130 @@ button:hover {
     width: 90%;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Sombra */
 }
-
 .popup-content h2 {
     margin-bottom: 15px;
     font-size: 1.8rem;
     color: #ffcc00;
 }
-
 .popup-content p {
     font-size: 1.1rem;
     margin-bottom: 20px;
-    color: #e0e0e0; /* Texto más claro */
+    color: #e0e0e0; 
 }
-
 .popup-content button {
     margin: 10px;
     padding: 12px 20px;
-    background: linear-gradient(90deg, #ffcc00, #ff9900); /* Gradiente atractivo */
+    background: linear-gradient(90deg, #ffcc00, #ff9900); 
     border: none;
-    border-radius: 10px; /* Bordes redondeados */
+    border-radius: 10px; 
     color: black;
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease; /* Transición en hover */
+    transition: background 0.3s ease; 
 }
-
 .popup-content button:hover {
     background: linear-gradient(90deg, #ff9900, #ff6600);
 }
-
-/* Contenedor de cada grupo (label + input/select) */
+/* Contenedor */
 .popup-content div {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Alineación izquierda */
-    gap: 5px; /* Espaciado uniforme entre label y campo */
-    margin-bottom: 15px; /* Espacio entre grupos */
+    align-items: flex-start; 
+    gap: 5px; 
+    margin-bottom: 15px; 
 }
-
 /* Estilizar labels */
 .popup-content label {
     font-size: 1rem;
     font-weight: bold;
-    color: #ffcc00; /* Color de las etiquetas */
-    margin-bottom: 10px; /* Más espacio debajo del label */
-    margin-left: 15px; /* Ajusta esta línea para mover el label hacia la izquierda */
-    text-align: left; /* Alineación del texto */
-    display: block; /* Asegura que se comporten como un bloque autónomo */
+    color: #ffcc00;
+    margin-bottom: 10px; 
+    margin-left: 15px; 
+    text-align: left;
+    display: block; 
 }
-
-/* Estilizar inputs y selects para que tengan el mismo tamaño */
+/* Estilizar inputs y selects */
 .popup-content input,
 .popup-content select {
-    width: 100%; /* Mantener anchura total */
-    padding: 12px; /* Espaciado interno */
-    margin: 5px 0 15px; /* Espaciado: 5px arriba, 0 a los lados, 15px abajo */
-    border: 1px solid #555; /* Bordes más suaves */
-    background-color: #1e1e1e; /* Fondo oscuro consistente */
-    color: white; /* Texto en blanco */
-    border-radius: 10px; /* Bordes redondeados */
-    font-size: 1rem; /* Tamaño de texto uniforme */
-    box-sizing: border-box; /* Asegura que padding y border no afecten tamaño */
-    transition: all 0.3s ease; /* Animación suave al interactuar */
+    width: 100%; 
+    padding: 12px; 
+    margin: 5px 0 15px; 
+    border: 1px solid #555; 
+    background-color: #1e1e1e; 
+    color: white; 
+    border-radius: 10px; 
+    font-size: 1rem; 
+    box-sizing: border-box; 
+    transition: all 0.3s ease; 
 }
-
-/* Enfocar input o select */
 .popup-content input:focus,
 .popup-content select:focus {
     outline: none;
-    border: 1px solid #ffcc00; /* Cambiar color del borde al enfocar */
-    background-color: #282c34; /* Fondo un poco más claro */
-    box-shadow: 0 0 10px #ffcc00; /* Efecto brillante */
+    border: 1px solid #ffcc00; 
+    background-color: #282c34; 
+    box-shadow: 0 0 10px #ffcc00; 
 }
-
-/* Mejora del botón */
 .popup-content button {
-    margin-top: 20px; /* Más separación del resto de elementos */
+    margin-top: 20px; 
     padding: 12px 20px;
-    background: linear-gradient(90deg, #ffcc00, #ff9900); /* Gradiente atractivo */
+    background: linear-gradient(90deg, #ffcc00, #ff9900); 
     border: none;
-    border-radius: 10px; /* Bordes redondeados */
+    border-radius: 10px; 
     color: black;
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease; /* Transición en hover */
+    transition: background 0.3s ease; 
 }
-
 /* Efecto hover en el botón */
 .popup-content button:hover {
     background: linear-gradient(90deg, #ff9900, #ff6600);
 }
-
-/* Panel lateral oculto (completamente fuera de la vista) */
+/* Panel lateral oculto */
 #historialPanel {
     position: fixed;
     top: 0;
-    right: -350px; /* Asegura que esté completamente fuera de la vista */
+    right: -350px;
     width: 300px;
-    height: 100%; /* Ocupa toda la altura de la ventana */
-    background-color: #282c34; /* Fondo oscuro consistente */
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    height: 100%; 
+    background-color: #282c34; 
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); 
     padding: 20px;
-    overflow-y: auto; /* Permite desplazarse si hay mucho contenido */
-    transition: right 0.3s ease; /* Animación de deslizamiento */
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    overflow-y: auto; 
+    transition: right 0.3s ease; 
+    z-index: 1000; 
     color: white;
-    border-radius: 10px 0 0 10px; /* Bordes redondeados en la esquina izquierda */
+    border-radius: 10px 0 0 10px; 
 }
-
 #historialPanel.show {
     right: 0; /* Mueve el panel completamente a la vista */
 }
-
 #historialPanel h2 {
     margin-top: 0;
     font-size: 1.5rem;
     color: #ffcc00;
     text-align: center;
 }
-
 #history {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
-
 #history th, #history td {
     border: 1px solid #444;
     padding: 8px;
     text-align: center;
 }
-
 #history th {
     background-color: #444;
     color: white;
 }
-
 #savedGames {
     list-style: none;
     padding: 0;
     margin-top: 20px;
 }
-
 #savedGames li {
     background-color: #444;
     color: white;
@@ -300,11 +266,9 @@ button:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 #savedGames li:hover {
     background-color: #555;
 }
-
 /* Botón flotante para abrir el panel */
 #openHistorial {
     position: fixed;
@@ -322,24 +286,19 @@ button:hover {
     cursor: pointer;
     transition: right 0.3s ease, bottom 0.3s ease; /* Transición suave */
 }
-
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
 }
-
-/* Ajustar la posición del botón cuando el historial está visible */
 #historialPanel.show ~ #openHistorial {
     right: calc(300px + 15px); /* Mueve el botón junto con el historial (300px del ancho del historial + 15px de margen) */
 }
-
 /* Clase para deshabilitar y hacer opacos los elementos en el fondo */
 .disabled-overlay {
     pointer-events: none; /* Deshabilita la interacción */
     opacity: 0.5; /* Reduce la opacidad */
     transition: opacity 0.3s ease; /* Transición suave */
 }
-
 /* Estilo para el historial */
 #historialPanel {
     background-color: #282c34;
@@ -353,27 +312,22 @@ button:hover {
     transition: right 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
-
 #historialPanel.show {
     right: 20px;
 }
-
 #history {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
-
 #history th, #history td {
     border: 1px solid #444;
     padding: 8px;
     text-align: center;
 }
-
 #history th {
     background-color: #444;
 }
-
 #clearHistory {
     background-color: #ff4d4d;
     color: white;
@@ -383,16 +337,13 @@ button:hover {
     cursor: pointer;
     margin-bottom: 20px;
 }
-
 #clearHistory:hover {
     background-color: #ff1a1a;
 }
-
 #savedGames {
     list-style: none;
     padding: 0;
 }
-
 #savedGames li {
     background-color: #444;
     color: white;
@@ -402,21 +353,19 @@ button:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 #savedGames li:hover {
     background-color: #555;
 }
-
 /* Botón para borrar el historial */
 #clearHistory {
-    position: relative; /* Cambia de fixed a relative para que siga el flujo del contenido */
-    background-color: #ffcc00; /* Color amarillo */
+    position: relative; 
+    background-color: #ffcc00; 
     color: black;
     border: none;
     padding: 10px;
-    border-radius: 50%; /* Forma circular */
+    border-radius: 50%; 
     cursor: pointer;
-    margin: 20px auto; /* Centra el botón horizontalmente */
+    margin: 20px auto; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -425,46 +374,41 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease, background-color 0.3s ease;
 }
-
 #clearHistory:hover {
-    transform: scale(1.1); /* Efecto de agrandamiento al pasar el cursor */
-    background-color: #ff9900; /* Cambia el color al pasar el cursor */
+    transform: scale(1.1); 
+    background-color: #ff9900; 
 }
-
 /* Ajustar la posición del botón cuando el panel está visible */
 #historialPanel.show ~ #clearHistory {
-    right: 360px; /* Mueve el botón junto con el panel (300px del panel + 40px de margen) */
+    right: 360px; 
 }
-
 /* Ajustes para el panel del historial */
 #historialPanel {
     position: fixed;
     top: 0;
-    right: -350px; /* Asegura que esté completamente fuera de la vista */
+    right: -350px; 
     width: 300px;
-    height: 100%; /* Ocupa toda la altura de la ventana */
-    background-color: #282c34; /* Fondo oscuro consistente */
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    height: 100%; 
+    background-color: #282c34; 
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5); 
     padding: 20px;
-    overflow-y: auto; /* Permite desplazarse si hay mucho contenido */
-    transition: right 0.3s ease; /* Animación de deslizamiento */
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    overflow-y: auto; 
+    transition: right 0.3s ease; 
+    z-index: 1000; 
     color: white;
-    border-radius: 10px 0 0 10px; /* Bordes redondeados en la esquina izquierda */
+    border-radius: 10px 0 0 10px; 
 }
-
 #historialPanel.show {
-    right: 0; /* Mueve el panel completamente a la vista */
+    right: 0; 
 }
-
 /* Botón flotante para abrir el panel */
 #openHistorial {
     position: fixed;
-    top: 100px; /* Mover el botón hacia arriba */
-    right: 15px; /* Posición inicial cuando el panel está oculto */
+    top: 100px; 
+    right: 15px;
     width: 50px;
     height: 50px;
-    background-color: #ffcc00; /* Color distintivo */
+    background-color: #ffcc00; 
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -472,22 +416,19 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1100; /* Encima del panel */
+    z-index: 1100; 
     font-size: 1.5rem;
     color: black;
-    transition: right 0.3s ease, top 0.3s ease; /* Transición suave */
+    transition: right 0.3s ease, top 0.3s ease; 
 }
-
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
 }
-
 /* Ajustar la posición del botón cuando el panel está visible */
 #historialPanel.show ~ #openHistorial {
-    right: calc(300px + 15px); /* Mueve el botón junto con el panel (300px del panel + 15px de margen) */
+    right: calc(300px + 15px); 
 }
-
 /* Estilos para tablets (pantallas entre 768px y 1024px) */
 @media (max-width: 1024px) {
     .game-container {
@@ -500,7 +441,6 @@ button:hover {
         margin-bottom: 20px;
     }
 }
-
 /* Estilos para móviles (pantallas menores a 768px) */
 @media (max-width: 768px) {
     h1 {
@@ -539,48 +479,47 @@ button:hover {
         right: 10px;
     }
 }
-
 /* Estilos para pantallas pequeñas (530px de ancho o menos) */
 @media (max-width: 530px) {
     /* Ajustar el contenedor del historial */
     #historialPanel {
         position: fixed;
         top: 0;
-        right: -100%; /* Ocultar completamente el historial fuera de la vista */
+        right: -100%; 
         width: 90%;
         height: 100%;
         background-color: #333;
         border-radius: 10px 0 0 10px;
         box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
-        overflow-y: auto; /* Habilitar desplazamiento interno */
-        z-index: 1000; /* Asegurar que esté encima de otros elementos */
+        overflow-y: auto; 
+        z-index: 1000; 
         padding: 10px;
-        transition: right 0.3s ease; /* Animación suave al mostrar/ocultar */
+        transition: right 0.3s ease; 
     }
 
     /* Mostrar el historial cuando se abra */
     #historialPanel.show {
-        right: 0; /* Mueve el historial completamente a la vista */
+        right: 0; 
     }
 
     /* Ajustar el botón de abrir historial */
     #openHistorial {
-        top: auto; /* Elimina la posición superior */
-        bottom: 15px; /* Mueve el botón a la parte inferior */
-        right: 15px; /* Mantén el botón en la esquina derecha */
-        width: 45px; /* Reducir el tamaño del botón */
+        top: auto; 
+        bottom: 15px;
+        right: 15px; 
+        width: 45px;
         height: 45px;
     }
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(90% + 15px); /* Mueve el botón junto con el historial (90% del ancho del historial + 15px de margen) */
+        right: calc(90% + 15px); 
     }
 
     /* Ajustar el contenido del historial */
     #history {
         width: 100%;
-        font-size: 0.8rem; /* Reducir el tamaño del texto */
+        font-size: 0.8rem; /
     }
 
     #history th, #history td {
@@ -615,23 +554,22 @@ button:hover {
         height: 50px;
     }
 }
-
 /* Estilos para pantallas pequeñas (554px a 887px) */
 @media (max-width: 887px) {
     /* Ajustar el contenedor del historial */
     #historialPanel {
         position: fixed;
         top: 0;
-        right: -100%; /* Ocultar completamente el historial fuera de la vista */
-        width: 80%; /* Ajustar el ancho del historial */
+        right: -100%;
+        width: 80%;
         height: 100%;
         background-color: #333;
         border-radius: 10px 0 0 10px;
         box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
-        overflow-y: auto; /* Habilitar desplazamiento interno */
-        z-index: 1000; /* Asegurar que esté encima de otros elementos */
+        overflow-y: auto; 
+        z-index: 1000; 
         padding: 10px;
-        transition: right 0.3s ease; /* Animación suave al mostrar/ocultar */
+        transition: right 0.3s ease; 
     }
 
     /* Mostrar el historial cuando se abra */
@@ -661,23 +599,22 @@ button:hover {
         right: calc(80% + 15px); /* Mueve el botón junto con el historial (80% del ancho del historial + 15px de margen) */
     }
 }
-
 /* Estilos para pantallas muy pequeñas (530px o menos) */
 @media (max-width: 530px) {
     /* Ajustar el contenedor del historial */
     #historialPanel {
         position: fixed;
         top: 0;
-        right: -100%; /* Ocultar completamente el historial fuera de la vista */
-        width: 90%; /* Ajustar el ancho del historial */
+        right: -100%; 
+        width: 90%; 
         height: 100%;
         background-color: #333;
         border-radius: 10px 0 0 10px;
         box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
-        overflow-y: auto; /* Habilitar desplazamiento interno */
-        z-index: 1000; /* Asegurar que esté encima de otros elementos */
+        overflow-y: auto; 
+        z-index: 1000;
         padding: 10px;
-        transition: right 0.3s ease; /* Animación suave al mostrar/ocultar */
+        transition: right 0.3s ease; 
     }
 
     /* Mostrar el historial cuando se abra */
@@ -708,160 +645,147 @@ button:hover {
         right: calc(90% + 15px); /* Mueve el botón junto con el historial (90% del ancho del historial + 15px de margen) */
     }
 }
-
 /* Ajustar el botón de abrir historial */
 #openHistorial {
     position: fixed;
     bottom: 15px;
-    right: 15px; /* Posición inicial cuando el historial está oculto */
+    right: 15px; 
     width: 50px;
     height: 50px;
     background-color: #ffcc00;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1100; /* Asegurar que esté encima del historial */
+    z-index: 1100; 
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: right 0.3s ease; /* Transición suave */
+    transition: right 0.3s ease; 
 }
-
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
 }
-
 /* Ajustar la posición del botón cuando el historial está visible */
 #historialPanel.show ~ #openHistorial {
-    right: calc(1000% + 130px); /* Mueve el botón junto con el historial (90% del ancho del historial + 15px de margen) */
+    right: calc(1000% + 130px); 
 }
 
 /* Estilos para pantallas pequeñas (530px o menos) */
 @media (max-width: 530px) {
     #openHistorial {
         bottom: 10px;
-        right: 10px; /* Ajustar la posición inicial en pantallas pequeñas */
-        width: 45px; /* Reducir el tamaño del botón */
+        right: 10px; 
+        width: 45px; 
         height: 45px;
     }
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(90% + 10px); /* Mueve el botón junto con el historial (90% del ancho del historial + 10px de margen) */
+        right: calc(90% + 10px); 
     }
 }
-
 /* Estilos para pantallas medianas (554px a 887px) */
 @media (max-width: 887px) {
     #openHistorial {
         bottom: 15px;
-        right: 15px; /* Ajustar la posición inicial */
+        right: 15px;
         width: 50px;
         height: 50px;
     }
 
-    /* Ajustar la posición del botón cuando el historial está visible */
+    
     #historialPanel.show ~ #openHistorial {
-        right: calc(80% + 15px); /* Mueve el botón junto con el historial (80% del ancho del historial + 15px de margen) */
+        right: calc(80% + 15px); 
     }
 }
-
 /* Botón flotante para abrir el historial */
 #openHistorial {
     position: fixed;
     bottom: 15px;
-    right: 15px; /* Posición inicial cuando el historial está oculto */
+    right: 15px; 
     width: 50px;
     height: 50px;
     background-color: #ffcc00;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1100; /* Asegurar que esté encima del historial */
+    z-index: 1100; 
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: right 0.3s ease; /* Transición suave */
+    transition: right 0.3s ease; 
 }
-
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
 }
-
 /* Ajustar la posición del botón cuando el historial está visible */
 #historialPanel.show ~ #openHistorial {
-    right: calc(300px + 15px); /* Mueve el botón junto con el historial (300px del ancho del historial + 15px de margen) */
+    right: calc(300px + 15px); 
 }
-
 /* Estilos para pantallas pequeñas (530px o menos) */
 @media (max-width: 530px) {
     #openHistorial {
         bottom: 10px;
-        right: 10px; /* Posición inicial en pantallas pequeñas */
-        width: 45px; /* Reducir el tamaño del botón */
+        right: 10px; 
+        width: 45px; 
         height: 45px;
     }
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(90% + 10px); /* Mueve el botón junto con el historial (90% del ancho del historial + 10px de margen) */
+        right: calc(90% + 10px); 
     }
 }
-
 /* Estilos para pantallas medianas (554px a 887px) */
 @media (max-width: 887px) {
     #openHistorial {
         bottom: 15px;
-        right: 15px; /* Ajustar la posición inicial */
+        right: 15px; 
         width: 50px;
         height: 50px;
     }
 
     /* Ajustar la posición del botón cuando el historial está visible */
     #historialPanel.show ~ #openHistorial {
-        right: calc(80% + 15px); /* Mueve el botón junto con el historial (80% del ancho del historial + 15px de margen) */
+        right: calc(80% + 15px); 
     }
 }
-
 /* Botón flotante fijo para abrir el historial */
 #openHistorial {
     position: fixed;
-    bottom: 15px; /* Fijo en la parte inferior */
-    right: 15px; /* Fijo en la esquina derecha */
+    bottom: 15px;
+    right: 15px; 
     width: 50px;
     height: 50px;
     background-color: #ffcc00;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1100; /* Asegurar que esté encima de otros elementos */
+    z-index: 1100; 
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s ease-in-out; /* Transición más rápida y fluida */
+    transition: all 0.2s ease-in-out;
 }
-
 /* Hover del botón */
 #openHistorial:hover {
     background-color: #ff9900;
-    transform: scale(1.1); /* Efecto de agrandamiento al pasar el cursor */
+    transform: scale(1.1);
 }
-
 /* Ajustar la posición del botón cuando el historial está visible */
 #historialPanel.show ~ #openHistorial {
-    right: calc(300px + 15px); /* Mueve el botón junto con el historial */
-    transition: all 0.2s ease-in-out; /* Transición rápida y fluida */
+    right: calc(300px + 15px); 
+    transition: all 0.2s ease-in-out; 
 }
-
 /* Estilos para pantallas pequeñas (530px o menos) */
 @media (max-width: 530px) {
     #openHistorial {
-        bottom: 10px; /* Ajustar la posición en pantallas pequeñas */
-        right: 10px; /* Ajustar la posición en pantallas pequeñas */
-        width: 45px; /* Reducir el tamaño del botón */
+        bottom: 10px; 
+        right: 10px; 
+        width: 45px; 
         height: 45px;
-        transition: all 0.2s ease-in-out; /* Transición rápida y fluida */
+        transition: all 0.2s ease-in-out; 
     }
 }
