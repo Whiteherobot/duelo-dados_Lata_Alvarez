@@ -1,51 +1,143 @@
 # 🎲 Duelo de Dados
 
 ## 📌 Descripción
-**Duelo de Dados** es un juego interactivo basado en la web donde dos jugadores compiten lanzando un dado en tres rondas. El jugador con la mayor puntuación acumulada al final de la partida gana.
+**Duelo de Dados** es un juego interactivo basado en la web donde dos jugadores compiten lanzando un dado en tres rondas. El jugador con la mayor puntuación acumulada al final de la partida gana. Este proyecto utiliza tecnologías web modernas para ofrecer una experiencia dinámica y responsiva.
 
-## 🚀 Características
-- 🎮 Juego para **dos jugadores**.
-- 🎲 Lanzamientos de dado animados.
-- 🔄 Cambio automático de turnos.
-- 🏆 Determinación automática del **ganador**.
-- 🔁 Opción para **reiniciar** el juego.
-- 🎵 Efectos visuales y sonoros para una mejor experiencia.
-- 📜 Historial de lanzamientos y puntuaciones.
+El juego incluye:
+- **Interfaz interactiva** para dos jugadores.
+- **Historial de lanzamientos** para registrar las puntuaciones.
+- **Animaciones y efectos visuales** para mejorar la experiencia del usuario.
 
-## 🕹️ Cómo Jugar
-1. Al cargar la página, se muestran las reglas básicas y la interfaz del juego.
+---
+
+## 🕹️ Instrucciones para Jugar
+1. Al cargar la página, se muestra una ventana emergente para personalizar los nombres y colores de los jugadores.
 2. **Jugador 1** lanza el dado presionando el botón "Lanzar dado" o la barra espaciadora.
-3. **Jugador 2** hace su lanzamiento después.
+3. **Jugador 2** realiza su lanzamiento después.
 4. Se repiten los turnos hasta completar **tres rondas**.
-5. Se muestra el resultado final y el botón para reiniciar la partida.
+5. Al finalizar, se muestra el ganador o un mensaje de empate.
+6. Puedes reiniciar el juego con el botón "Reiniciar".
 
-## 📜 Reglas
+---
+
+## 📜 Reglas del Juego
 - Cada jugador lanza el dado **una vez por turno**.
 - El juego tiene un total de **tres rondas**.
 - Gana el jugador con la **mayor puntuación acumulada**.
 - Si hay empate, se mostrará un mensaje indicando el resultado.
 
-## 🛠️ Tecnologías Utilizadas
-- **HTML5** 🎨 para la estructura de la interfaz.
-- **CSS3** 🎭 para estilos y animaciones.
-- **JavaScript** ⚡ para la lógica del juego y la manipulación del DOM.
+---
 
 ## 📸 Capturas de Pantalla
-*(Aquí puedes incluir imágenes del juego en acción)*
+*(Agrega imágenes aquí para mostrar la interfaz del juego y las funcionalidades principales)*
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+Este proyecto fue desarrollado utilizando las siguientes tecnologías:
+- **HTML5**: Para la estructura semántica de la interfaz.
+- **CSS3**: Para los estilos, diseño responsivo y animaciones.
+- **JavaScript (ES6)**: Para la lógica del juego, manipulación del DOM y control de eventos.
+
+---
+
+## 🔍 Funciones Técnicas Implementadas
+
+### 1. **Control de Turnos**
+   - Se utiliza una variable global `turnoActivo` para alternar entre los jugadores.
+   - La función `lanzarDado()` actualiza el turno y registra la puntuación del jugador actual.
+
+   ```javascript
+   function lanzarDado() {
+       const dado = Math.floor(Math.random() * 6) + 1; // Generar número aleatorio entre 1 y 6
+       actualizarPuntuacion(dado);
+       cambiarTurno();
+   }
+   ```
+
+### 2. **Historial de Lanzamientos**
+   - Los lanzamientos de cada jugador se registran en un historial dinámico.
+   - Se utiliza manipulación del DOM para agregar filas a una tabla que muestra los resultados.
+
+   ```javascript
+   function actualizarHistorial(jugador, lanzamiento) {
+       const tablaHistorial = document.getElementById("history").querySelector("tbody");
+       const nuevaFila = document.createElement("tr");
+       nuevaFila.innerHTML = `<td>${jugador}</td><td>${lanzamiento}</td>`;
+       tablaHistorial.appendChild(nuevaFila);
+   }
+   ```
+
+### 3. **Ventana Emergente de Personalización**
+   - Al inicio, se muestra una ventana emergente para que los jugadores ingresen sus nombres y seleccionen colores personalizados.
+   - Los valores ingresados se aplican dinámicamente al tablero de juego.
+
+   ```javascript
+   document.getElementById("startGame").addEventListener("click", function () {
+       const player1Name = document.getElementById("player1Name").value.trim();
+       const player2Name = document.getElementById("player2Name").value.trim();
+       document.querySelector(".player:nth-child(1) h2").innerText = player1Name;
+       document.querySelector(".player:nth-child(3) h2").innerText = player2Name;
+   });
+   ```
+
+### 4. **Diseño Responsivo**
+   - Se implementaron media queries en CSS para garantizar que el diseño se adapte a diferentes tamaños de pantalla.
+   - El botón flotante y el historial se ajustan dinámicamente en dispositivos móviles.
+
+   ```css
+   @media (max-width: 530px) {
+       #openHistorial {
+           bottom: 10px;
+           right: 10px;
+           width: 45px;
+           height: 45px;
+       }
+   }
+   ```
+
+### 5. **Reinicio del Juego**
+   - La función `reiniciarJuego()` restablece todas las variables y el estado del DOM para iniciar una nueva partida.
+
+   ```javascript
+   function reiniciarJuego() {
+       turnoActivo = true;
+       juegoTerminado = false;
+       document.getElementById("score1").innerText = "0";
+       document.getElementById("score2").innerText = "0";
+       limpiarHistorial();
+   }
+   ```
+
+---
 
 ## 🔮 Funcionalidades Futuras
-- Guardado de **mejor puntuación** en localStorage.
-- Opción de **personalizar nombres** de los jugadores.
-- **Temas de colores** para cambiar el diseño del juego.
-- Más efectos de sonido y animaciones.
+- **Guardado de Mejor Puntuación**:
+  - Implementar localStorage para registrar la mejor puntuación de los jugadores.
+- **Temas Personalizables**:
+  - Agregar opciones para cambiar el tema de colores del juego.
+- **Efectos de Sonido**:
+  - Incluir sonidos para los lanzamientos y notificaciones de ganadores.
+
+---
 
 ## 👨‍💻 Instalación y Uso
 1. Clona este repositorio:
    ```sh
-   https://github.com/Whiteherobot/duelo-dados_Lata_Alvarez
+   git clone https://github.com/Whiteherobot/duelo-dados_Lata_Alvarez
    ```
 2. Abre el archivo `index.html` en tu navegador.
 3. ¡Disfruta el juego! 🎲
 
+---
+
+## 📂 Control de Versiones
+Este proyecto utiliza **Git** para el control de versiones. Asegúrate de realizar commits significativos con mensajes claros. Ejemplo:
+```sh
+git commit -m "Agregada funcionalidad de historial de lanzamientos"
+```
+
+---
+
 ## 📩 Contacto
-Si tienes sugerencias o quieres colaborar en el proyecto, ¡no dudes en hacer un pull request o contactarme!
+Si tienes sugerencias, encuentras errores o quieres colaborar en el proyecto, ¡no dudes en hacer un pull request o contactarme!

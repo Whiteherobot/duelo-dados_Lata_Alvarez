@@ -26,12 +26,15 @@ function lanzarDado() {
 
     if (juegoTerminado || !turnoActivo) return;
 
-    turnoActivo = false;
+    turnoActivo = false; // Bloquear interacción hasta que termine el turno
+
+    // Reproducir el sonido del dado inmediatamente
+    diceSound.play();
+
     let currentPlayer = turn % 2 === 1 ? 0 : 1;
     let diceRoll = Math.floor(Math.random() * 6) + 1;
     let diceElement = document.getElementById(`dice${currentPlayer + 1}`);
 
-    diceSound.play(); // Reproducir el sonido del dado
     diceElement.classList.add("rolling");
     setTimeout(() => {
         diceElement.classList.remove("rolling");
@@ -61,8 +64,12 @@ function lanzarDado() {
         turn++;
         // Actualizar el texto del turno con los nombres personalizados
         document.getElementById("turn").innerText = `Turno de: ${turn % 2 === 1 ? playerNames[0] : playerNames[1]}`;
-        turnoActivo = true;
-    }, 500);
+
+        // Habilitar interacción después de 1 segundo
+        setTimeout(() => {
+            turnoActivo = true;
+        }, 1000);
+    }, 500); // La animación del dado dura 500ms
 }
 
 // Función para actualizar visualización de los dados
@@ -472,10 +479,6 @@ openHistorialButton.addEventListener("click", () => {
     // Verificar si la ventana emergente está activa
     if (popup && popup.classList.contains("show")) {
         return; // No hacer nada si la ventana emergente está activa
-    }
-
-    if (viendoPartidaGuardada) {
-        cerrarVistaPartidaGuardada(); // Cerrar la vista de la partida guardada si está activa
     }
 
     if (historialPanel.classList.contains("show")) {
