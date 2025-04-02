@@ -44,7 +44,7 @@ function lanzarDado() {
         rolls[currentPlayer]++;
         document.getElementById(`score${currentPlayer + 1}`).innerText = scores[currentPlayer];
 
-        if (rolls[currentPlayer] === 3) {
+        if (rolls[currentPlayer] === 1) {
             rolls[currentPlayer] = 0;
             if (currentPlayer === 1) {
                 round++;
