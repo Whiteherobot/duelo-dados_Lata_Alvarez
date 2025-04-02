@@ -193,6 +193,40 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
         // Reiniciar el juego con los mismos jugadores
         resetGameState();
     });
+        // Manejar la opción de agregar nuevos jugadores
+    document.getElementById("addNewPlayers").addEventListener("click", () => {
+        // Cerrar la ventana emergente
+        confirmationPopup.classList.remove("show");
+        setTimeout(() => confirmationPopup.remove(), 300);
+
+        // Restaurar el botón del historial
+        openHistorialButton.classList.remove("disabled-overlay");
+
+        // Reiniciar el estado del juego
+        resetGameState();
+
+        // Mostrar la ventana emergente de bienvenida para agregar nuevos jugadores
+        const popup = document.getElementById("popup");
+        popup.classList.add("show");
+
+        // Actualizar los nombres de los jugadores después de cerrar la ventana emergente
+        document.getElementById("startGame").addEventListener("click", function () {
+            const player1Name = document.getElementById("player1Name").value.trim();
+            const player2Name = document.getElementById("player2Name").value.trim();
+
+            if (player1Name) playerNames[0] = player1Name;
+            if (player2Name) playerNames[1] = player2Name;
+
+            document.querySelectorAll(".player h2")[0].innerText = playerNames[0];
+            document.querySelectorAll(".player h2")[1].innerText = playerNames[1];
+
+            // Ocultar la ventana emergente
+            popup.classList.remove("show");
+
+            // Actualizar la interfaz con la copa
+            actualizarCopa();
+        });
+    });
     }
    ```
 
