@@ -33,28 +33,28 @@ El juego incluye:
 ### 1. **Pantalla de Inicio**
 La pantalla inicial muestra una ventana emergente donde los jugadores pueden personalizar sus nombres y colores antes de comenzar el juego.
 
-![Pantalla de Inicio](ruta/a/tu/imagen-inicio.png)
+![Pantalla de Inicio](image.png)
 
 ---
 
 ### 2. **Tablero de Juego**
 El tablero principal muestra las secciones de cada jugador, el panel central con la ronda actual y el turno activo.
 
-![Tablero de Juego](ruta/a/tu/imagen-tablero.png)
+![Tablero de Juego](image2.png)
 
 ---
 
 ### 3. **Historial de Lanzamientos**
 El historial dinámico registra los lanzamientos de cada jugador y muestra los resultados en una tabla.
 
-![Historial de Lanzamientos](ruta/a/tu/imagen-historial.png)
+![Historial de Lanzamientos](image3.png)
 
 ---
 
 ### 4. **Pantalla de Resultado**
 Al finalizar las tres rondas, se muestra un mensaje indicando el ganador o si hubo un empate.
 
-![Pantalla de Resultado](ruta/a/tu/imagen-resultado.png)
+![Pantalla de Resultado](image4.png)
 
 ---
 
