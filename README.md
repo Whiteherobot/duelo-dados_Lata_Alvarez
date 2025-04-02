@@ -85,12 +85,16 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
    - Se utiliza manipulación del DOM para agregar filas a una tabla que muestra los resultados.
 
    ```javascript
-   function actualizarHistorial(jugador, lanzamiento) {
-       const tablaHistorial = document.getElementById("history").querySelector("tbody");
-       const nuevaFila = document.createElement("tr");
-       nuevaFila.innerHTML = `<td>${jugador}</td><td>${lanzamiento}</td>`;
-       tablaHistorial.appendChild(nuevaFila);
-   }
+   function actualizarHistorial(player, roll) {
+    const table = document.getElementById("history");
+    const row = table.insertRow();
+    row.innerHTML = `
+        <td><strong>${playerNames[player]}</strong></td>
+        <td>${roll}</td>
+    `;
+
+    guardarHistorialEnLocalStorage();
+    }
    ```
 
 ### 3. **Ventana Emergente de Personalización**
@@ -99,11 +103,37 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
    ```javascript
    document.getElementById("startGame").addEventListener("click", function () {
-       const player1Name = document.getElementById("player1Name").value.trim();
-       const player2Name = document.getElementById("player2Name").value.trim();
-       document.querySelector(".player:nth-child(1) h2").innerText = player1Name;
-       document.querySelector(".player:nth-child(3) h2").innerText = player2Name;
-   });
+    // Obtener los valores ingresados por el usuario
+    const player1Name = document.getElementById("player1Name").value.trim();
+    const player2Name = document.getElementById("player2Name").value.trim();
+    const player1Color = document.getElementById("colorPlayer1").value;
+    const player2Color = document.getElementById("colorPlayer2").value;
+
+    // Validar que se hayan ingresado nombres
+    if (!player1Name || !player2Name) {
+        alert("Por favor, ingresa los nombres de ambos jugadores.");
+        return; 
+    }
+
+    // Aplicar nombres y colores personalizados
+    playerNames[0] = player1Name;
+    playerNames[1] = player2Name;
+
+    document.querySelector(".player:nth-child(1) h2").innerText = player1Name;
+    document.querySelector(".player:nth-child(3) h2").innerText = player2Name;
+
+    document.querySelector(".player:nth-child(1)").style.backgroundColor = player1Color;
+    document.querySelector(".player:nth-child(3)").style.backgroundColor = player2Color;
+
+    // Ocultar la ventana emergente
+    const popup = document.getElementById("popup");
+    popup.classList.remove("show");
+    openHistorialButton.classList.remove("disabled-overlay"); 
+    mainContent.classList.remove("disabled-overlay"); 
+
+    // Reiniciar el estado del juego
+    resetGameState();
+    });
    ```
 
 ### 4. **Diseño Responsivo**
@@ -112,13 +142,21 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
    ```css
    @media (max-width: 530px) {
-       #openHistorial {
-           bottom: 10px;
-           right: 10px;
-           width: 45px;
-           height: 45px;
-       }
-   }
+    /* Ajustar el contenedor del historial */
+    #historialPanel {
+        position: fixed;
+        top: 0;
+        right: -100%; 
+        width: 90%;
+        height: 100%;
+        background-color: #333;
+        border-radius: 10px 0 0 10px;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
+        overflow-y: auto; 
+        z-index: 1000; 
+        padding: 10px;
+        transition: right 0.3s ease; 
+    }}
    ```
 
 ### 5. **Reinicio del Juego**
@@ -126,12 +164,36 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
    ```javascript
    function reiniciarJuego() {
-       turnoActivo = true;
-       juegoTerminado = false;
-       document.getElementById("score1").innerText = "0";
-       document.getElementById("score2").innerText = "0";
-       limpiarHistorial();
-   }
+    // Crear una ventana emergente personalizada
+    const confirmationPopup = document.createElement("div");
+    confirmationPopup.classList.add("popup");
+    confirmationPopup.innerHTML = `
+        <div class="popup-content">
+            <h2>¿Deseas reiniciar?</h2>
+            <p>¿Quieres continuar con los mismos jugadores o agregar nuevos?</p>
+            <button id="continueSamePlayers">Continuar con los mismos</button>
+            <button id="addNewPlayers">Agregar nuevos jugadores</button>
+        </div>
+    `;
+    document.body.appendChild(confirmationPopup);
+
+    // Mostrar la ventana emergente
+    confirmationPopup.classList.add("show");
+    openHistorialButton.classList.add("disabled-overlay"); 
+
+    // Manejar la opción de continuar con los mismos jugadores
+    document.getElementById("continueSamePlayers").addEventListener("click", () => {
+        // Cerrar la ventana emergente
+        confirmationPopup.classList.remove("show");
+        setTimeout(() => confirmationPopup.remove(), 300);
+
+        // Restaurar el botón del historial
+        openHistorialButton.classList.remove("disabled-overlay");
+
+        // Reiniciar el juego con los mismos jugadores
+        resetGameState();
+    });
+    }
    ```
 
 ---
