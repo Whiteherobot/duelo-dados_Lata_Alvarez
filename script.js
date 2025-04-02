@@ -52,7 +52,7 @@ function lanzarDado() {
             }
         }
 
-        if (turn >= 18) {
+        if (turn >= 6) {
             juegoTerminado = true;
             determinarGanador();
             agregarGanadorAlHistorial();
